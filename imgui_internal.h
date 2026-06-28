@@ -2533,6 +2533,8 @@ struct ImGuiContext
     // Item/widgets state and tracking information
     ImGuiID                 DebugDrawIdConflictsId;             // Set when we detect multiple items with the same identifier
     ImGuiID                 DebugHookIdInfoId;                  // Will call core hooks: DebugHookIdInfo() from GetID functions, used by ID Stack Tool [next HoveredId/ActiveId to not pull in an extra cache-line]
+    ImGuiItemAddCallback    ItemAddCallback;                    // Called from ItemAdd() hot path.
+    void*                   ItemAddCallbackUserData;
     ImGuiID                 HoveredId;                          // Hovered widget, filled during the frame
     ImGuiID                 HoveredIdPreviousFrame;
     int                     HoveredIdPreviousFrameItemCount;    // Count numbers of items using the same ID as last frame's hovered id

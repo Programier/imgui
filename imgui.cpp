@@ -12044,7 +12044,7 @@ bool ImGui::ItemAdd(const ImRect& bb, ImGuiID id, const ImRect* nav_bb_arg, ImGu
     // Note: we don't copy 'g.NextItemData.SelectionUserData' to an hypothetical g.LastItemData.SelectionUserData: since the former is not cleared.
 
     // Hot path callback: fires before nav handling, clipping and early-out so it can observe every submitted item.
-    if (g.ItemAddCallback != NULL) IM_UNLIKELY
+    if (IM_UNLIKELY(g.ItemAddCallback != NULL))
         g.ItemAddCallback(&g, g.ItemAddCallbackUserData, id, g.LastItemData.Rect.Min, g.LastItemData.Rect.Max, g.LastItemData.NavRect.Min, g.LastItemData.NavRect.Max, g.LastItemData.ItemFlags);
 
     if (id != 0)

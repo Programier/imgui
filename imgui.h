@@ -319,8 +319,6 @@ struct ImVec4
     IM_VEC4_CLASS_EXTRA     // Define additional constructors and implicit cast operators in imconfig.h to convert back and forth between your math types and ImVec4.
 #endif
 };
-
-typedef void    (*ImGuiItemAddCallback)(ImGuiContext* ctx, void* user_data, ImGuiID id, ImVec2 bb_min, ImVec2 bb_max, ImVec2 nav_bb_min, ImVec2 nav_bb_max, ImGuiItemFlags item_flags); // Hot path callback for ImGui::SetItemAddCallback().
 IM_MSVC_RUNTIME_CHECKS_RESTORE
 
 //-----------------------------------------------------------------------------
@@ -1193,7 +1191,6 @@ namespace ImGui
     //   for each static/DLL boundary you are calling from. Read "Context and Memory Allocators" section of imgui.cpp for more details.
     IMGUI_API void          SetAllocatorFunctions(ImGuiMemAllocFunc alloc_func, ImGuiMemFreeFunc free_func, void* user_data = NULL);
     IMGUI_API void          GetAllocatorFunctions(ImGuiMemAllocFunc* p_alloc_func, ImGuiMemFreeFunc* p_free_func, void** p_user_data);
-    IMGUI_API void          SetItemAddCallback(ImGuiItemAddCallback custom_callback = NULL, void* custom_callback_user_data = NULL); // Called from ItemAdd() hot path. Keep callback lightweight.
     IMGUI_API void*         MemAlloc(size_t size);
     IMGUI_API void          MemFree(void* ptr);
 

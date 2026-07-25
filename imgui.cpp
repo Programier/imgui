@@ -4220,13 +4220,6 @@ void ImGui::GetAllocatorFunctions(ImGuiMemAllocFunc* p_alloc_func, ImGuiMemFreeF
     *p_user_data = GImAllocatorUserData;
 }
 
-void ImGui::SetItemAddCallback(ImGuiItemAddCallback custom_callback, void* custom_callback_user_data)
-{
-    ImGuiContext& g = *GImGui;
-    g.ItemAddCallback = custom_callback;
-    g.ItemAddCallbackUserData = custom_callback_user_data;
-}
-
 ImGuiContext* ImGui::CreateContext(ImFontAtlas* shared_font_atlas)
 {
     ImGuiContext* prev_ctx = GetCurrentContext();
@@ -4293,8 +4286,6 @@ ImGuiContext::ImGuiContext(ImFontAtlas* shared_font_atlas)
         IO.Fonts->OwnerContext = this;
     WithinEndChildID = WithinEndPopupID = 0;
     TestEngine = NULL;
-    ItemAddCallback = NULL;
-    ItemAddCallbackUserData = NULL;
 
     InputEventsNextMouseSource = ImGuiMouseSource_Mouse;
     InputEventsNextEventId = 1;
@@ -12042,10 +12033,6 @@ bool ImGui::ItemAdd(const ImRect& bb, ImGuiID id, const ImRect* nav_bb_arg, ImGu
     g.LastItemData.ItemFlags = g.CurrentItemFlags | g.NextItemData.ItemFlags | extra_flags;
     g.LastItemData.StatusFlags = ImGuiItemStatusFlags_None;
     // Note: we don't copy 'g.NextItemData.SelectionUserData' to an hypothetical g.LastItemData.SelectionUserData: since the former is not cleared.
-
-    // Hot path callback: fires before nav handling, clipping and early-out so it can observe every submitted item.
-    if (IM_UNLIKELY(g.ItemAddCallback != NULL))
-        g.ItemAddCallback(&g, g.ItemAddCallbackUserData, id, g.LastItemData.Rect.Min, g.LastItemData.Rect.Max, g.LastItemData.NavRect.Min, g.LastItemData.NavRect.Max, g.LastItemData.ItemFlags);
 
     if (id != 0)
     {
